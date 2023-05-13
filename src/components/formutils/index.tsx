@@ -1,5 +1,5 @@
 import { FieldInputProps, FormikValues } from "formik";
-import { ChangeEvent, FocusEvent, KeyboardEvent } from "react";
+import { ChangeEvent, KeyboardEvent } from "react";
 
 type TextFieldProps = {
   form: FormikValues;
@@ -18,7 +18,7 @@ type TextFieldProps = {
 
 export const TextField: React.FC<TextFieldProps> = ({
   form: { errors, setTouched, touched, setFieldValue, ...form },
-  field: { name, value, onChange, onBlur },
+  field: { name, value },
   label,
   disabled,
   className = "",
@@ -32,8 +32,6 @@ export const TextField: React.FC<TextFieldProps> = ({
   ...props
 }) => {
   const error = errors[name];
-  const touch = touched[name];
-  //   console.log("tpuch", touched);
   const inputStringLength = value?.length || 0;
 
   return (
@@ -44,7 +42,7 @@ export const TextField: React.FC<TextFieldProps> = ({
         {showCharLength && `${inputStringLength} / ${maxLength}`}
       </div>
 
-      <div className="border border-[#E6E6E6] rounded-md overflow-hidden ">
+      <div className="border border-[#E6E6E6] rounded-md overflow-hidden text-sm">
         <input
           placeholder={placeholder}
           className={"w-full h-8 p-1"}
@@ -61,12 +59,6 @@ export const TextField: React.FC<TextFieldProps> = ({
               ).value.replace(/\s/g, "");
               setFieldValue(name, (evt.target as HTMLInputElement).value);
             }
-          }}
-          onBlur={(event: FocusEvent<HTMLInputElement>) => {
-            // setFieldValue(
-            //   name,
-            //   (event.target as HTMLInputElement).value.trim()
-            // );
           }}
           maxLength={maxLength}
           {...props}

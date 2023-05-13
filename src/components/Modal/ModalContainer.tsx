@@ -1,18 +1,6 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
-
 import styled from "styled-components";
-
-export const BaseModal = styled.div`
-  position: absolute;
-  width: 100%;
-  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
-    0 3px 1px -2px rgba(0, 0, 0, 0.12);
-  height: 100%;
-  padding: 0;
-  z-index: 500;
-  min-height: 100%;
-`;
 
 type ModalContainerProps = {
   children?: React.ReactNode | (({ scrollTop }: { scrollTop: number }) => void);
@@ -21,12 +9,7 @@ type ModalContainerProps = {
   zIndex?: number;
 };
 
-const ModalContainer: React.FC<ModalContainerProps> = ({
-  children,
-  backdrop = false,
-  className = "",
-  zIndex = 500,
-}) => {
+const ModalContainer: React.FC<ModalContainerProps> = ({ children }) => {
   const scrollTop = document.documentElement.scrollTop;
   useEffect(() => {
     document.body.classList.add("modal-open");
@@ -35,19 +18,12 @@ const ModalContainer: React.FC<ModalContainerProps> = ({
 
   const modalRoot = document.getElementById("modal-root") as HTMLElement;
   return ReactDOM.createPortal(
-    <BaseModal
-      className={className}
-      style={{
-        top: `${scrollTop}px`,
-        backgroundColor: backdrop ? "rgba(0,0,0,0.4)" : "inherit",
-        zIndex,
-      }}
-    >
+    <div className="absolute w-full h-full p-0 min-h-full z-50 top-0 shadow-md">
       <>
         {typeof children === "function" && children({ scrollTop })}
         {children && children}
       </>
-    </BaseModal>,
+    </div>,
     modalRoot
   );
 };

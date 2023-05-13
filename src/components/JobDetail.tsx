@@ -60,7 +60,9 @@ const JobDetail: React.FC<{ job: TJob }> = ({ job }) => {
             <p className="mt-2">
               INR (₹) {minSalary} - {maxSalary} / Month
             </p>
-            <p className="mt-2">{totalEmployee}-200 employees</p>
+            <p className="mt-2">
+              {totalEmployee}-{Number(totalEmployee) + 200} employees
+            </p>
           </div>
           {job.applyType === APPLY_TYPE.QUICK_APPLY ? (
             <button className="bg-[#1597E4] h-10 px-4 py-2 rounded-lg text-white mr-6">
@@ -72,6 +74,7 @@ const JobDetail: React.FC<{ job: TJob }> = ({ job }) => {
             </button>
           )}
         </div>
+        {/* Actions */}
         <div className="ml-24 text-gray-500 flex flex-row items-start">
           <button
             className="mr-2 hover:text-red-700"

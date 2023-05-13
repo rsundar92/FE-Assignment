@@ -7,7 +7,7 @@ import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
-    <div className="bg-[#D8D8D8] p-8">
+    <div className="bg-[#D8D8D8] p-8 w-full h-screen">
       <ToastContainer />
       <JobContextProvider>
         <JobListWrapper />

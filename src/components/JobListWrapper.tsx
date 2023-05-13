@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 import { useJobDispatchContext, useJobStateContext } from "../modules/job";
 import { fetchJobs } from "../modules/job/reducer";
 import CreateJobFormWrapper from "./CreateJobFormWrapper";
@@ -17,7 +18,7 @@ const JobListWrapper: React.FC<{}> = () => {
   return (
     <>
       {isFetching ? (
-        "Loading skeleton goes here..."
+        <Skeleton height={30} width={250} />
       ) : (
         <>
           <div className="flex justify-end ">

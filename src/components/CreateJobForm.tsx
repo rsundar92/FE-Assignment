@@ -1,4 +1,4 @@
-import { Field, FormikErrors, FormikProvider, useFormik } from "formik";
+import { Field, FormikProvider, useFormik } from "formik";
 import SimpleInfoModal from "./Modal/SimpleInfoModal";
 import { TextField } from "./formutils";
 import { useState } from "react";
@@ -7,38 +7,7 @@ import { useJobDispatchContext } from "../modules/job";
 import { receiveJob, updateJob } from "../modules/job/reducer";
 import { toast } from "react-toastify";
 import { createJobReq, updateJobReq } from "./api/job";
-import { ERROR_MESSAGE } from "../appConstants";
-
-const validate = (values: TJob) => {
-  const errors: FormikErrors<TJob> = {};
-  if (!values.title) {
-    errors.title = ERROR_MESSAGE.REQUIRED;
-  }
-  if (!values.companyName) {
-    errors.companyName = ERROR_MESSAGE.REQUIRED;
-  }
-  if (!values.industry) {
-    errors.industry = ERROR_MESSAGE.REQUIRED;
-  }
-  if (
-    values.maxExperience &&
-    values.minExperience &&
-    values.maxExperience < values.minExperience
-  ) {
-    errors.minExperience =
-      "Minimum experience should be less that Maximum experience";
-  }
-
-  if (
-    values.maxSalary &&
-    values.minSalary &&
-    values.maxSalary < values.minSalary
-  ) {
-    errors.minExperience = "Minimum salary should be less that Maximum salary";
-  }
-
-  return errors;
-};
+import { validate } from "./formutils/validate";
 
 const CreateJobForm: React.FC<{
   onClose: () => void;
@@ -55,35 +24,33 @@ const CreateJobForm: React.FC<{
         updateJobReq(values.id, values)
           .then((data) => {
             dispatch(updateJob(data?.data));
-            toast("Job is edited successfully");
+            toast("Posted Job is updated successfully");
             onClose();
           })
           .catch((err) => {
-            toast("Error in updating the job");
+            toast("Error in updating the posted job");
             console.error(err);
-          })
-          .finally(() => {});
+          });
       } else {
         createJobReq(values)
           .then((data) => {
             dispatch(receiveJob(data?.data));
-            toast("New Job is created successfully");
+            toast("New Job is posted successfully");
             onClose();
           })
           .catch((err) => {
-            toast("Error in creating the job");
+            toast("Error in posting the job");
             console.error(err);
-          })
-          .finally(() => {});
+          });
       }
     },
   });
 
-  const { submitForm, values, setFieldValue, errors } = formik;
+  const { submitForm, values, setFieldValue } = formik;
 
   return (
     <FormikProvider value={formik}>
-      <SimpleInfoModal onClose={() => onClose()} borderRadius={18}>
+      <SimpleInfoModal onClose={() => onClose()}>
         {() => (
           <>
             <div>
@@ -229,7 +196,6 @@ const CreateJobForm: React.FC<{
             <div className="flex justify-end">
               <button
                 onClick={() => {
-                  console.log("errorserrorserrors", errors);
                   if (
                     !values.companyName ||
                     !values.industry ||
@@ -240,7 +206,7 @@ const CreateJobForm: React.FC<{
                     isStep1Completed ? submitForm() : setStep1Completed(true);
                   }
                 }}
-                className="bg-[#1597E4] h-10 px-4 py-2 rounded-lg text-white mt-24"
+                className="bg-[#1597E4] h-10 px-4 py-2 rounded-lg text-white mt-14"
               >
                 {isStep1Completed ? "Save" : "Next"}
               </button>
