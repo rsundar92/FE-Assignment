@@ -152,7 +152,7 @@ const CreateJobForm: React.FC<{
                     component={TextField}
                     type={"Number"}
                   />
-                  <div>
+                  <div className="mb-6">
                     <div className="mb-1">
                       <label className="font-medium">Apply Type</label>
                     </div>
@@ -210,14 +210,14 @@ const CreateJobForm: React.FC<{
               >
                 {isStep1Completed ? "Save" : "Next"}
               </button>
-              {isStep1Completed && (
+              {/* {isStep1Completed && (
                 <button
                   onClick={() => setStep1Completed(false)}
                   className="bg-[#1597E4] h-10 px-4 py-2 rounded-lg text-white mt-24"
                 >
                   {isStep1Completed && "Back"}
                 </button>
-              )}
+              )} */}
             </div>
           </>
         )}

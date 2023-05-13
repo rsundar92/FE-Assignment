@@ -9,7 +9,7 @@ import { deleteJob } from "../modules/job/reducer";
 import { toast } from "react-toastify";
 import { deleteJobReq } from "./api/job";
 
-const JobDetail: React.FC<{ job: TJob }> = ({ job }) => {
+const JobDetailCard: React.FC<{ job: TJob }> = ({ job }) => {
   const {
     id,
     title,
@@ -93,4 +93,4 @@ const JobDetail: React.FC<{ job: TJob }> = ({ job }) => {
   );
 };
 
-export default JobDetail;
+export default JobDetailCard;

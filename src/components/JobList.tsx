@@ -1,4 +1,4 @@
-import JobDetail from "./JobDetail";
+import JobDetailCard from "./JobDetail";
 import { TJob } from "./types";
 
 const JobList: React.FC<{ jobs: TJob[] }> = ({ jobs }) => {
@@ -6,7 +6,7 @@ const JobList: React.FC<{ jobs: TJob[] }> = ({ jobs }) => {
     <>
       {jobs.map((job: TJob) => (
         <div key={job.id} className="p-4 w-6/12">
-          <JobDetail key={job.id} job={job} />
+          <JobDetailCard key={job.id} job={job} />
         </div>
       ))}
     </>
