@@ -1,4 +1,4 @@
-import React, { useEffect, useState, CSSProperties } from "react";
+import React, { useEffect, useState } from "react";
 import Animated from "./Animated";
 import ModalContainer from "./ModalContainer";
 
@@ -7,9 +7,6 @@ type TSimpleInfoModalProps = {
   onClose(): void;
   width?: number;
   zIndex?: number;
-  styles?: {
-    contentStyles?: CSSProperties;
-  };
   children?:
     | React.ReactNode
     | (({ closeModal }: { closeModal: () => void }) => void);
@@ -29,9 +26,9 @@ const SimpleInfoModal: React.FC<TSimpleInfoModalProps> = ({
 
   return (
     <ModalContainer zIndex={zIndex}>
-      <div className="overflow-y-auto bg-[#1f2021ad] h-full">
+      <div className="overflow-y-auto bg-[#1f2021ad] h-screen">
         <Animated show={modal} onDestroy={onClose}>
-          <div className="w-full h-screen w-full flex items-center justify-center">
+          <div className="w-full h-screen flex items-center justify-center">
             <div className="bg-white relative rounded-lg py-8 px-10 w-1/3">
               <>
                 <div

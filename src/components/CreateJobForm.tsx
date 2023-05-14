@@ -15,11 +15,13 @@ const CreateJobForm: React.FC<{
 }> = ({ onClose, jobDetail }) => {
   const [isStep1Completed, setStep1Completed] = useState(false);
   const dispatch = useJobDispatchContext();
+  const [loading, setLoading] = useState(false);
 
   const formik = useFormik<TJob>({
     initialValues: jobDetail || ({} as TJob),
     validate,
     onSubmit: (values: TJob) => {
+      setLoading(true);
       if (values.id) {
         updateJobReq(values.id, values)
           .then((data) => {
@@ -30,6 +32,9 @@ const CreateJobForm: React.FC<{
           .catch((err) => {
             toast("Error in updating the posted job");
             console.error(err);
+          })
+          .finally(() => {
+            setLoading(false);
           });
       } else {
         createJobReq(values)
@@ -41,6 +46,9 @@ const CreateJobForm: React.FC<{
           .catch((err) => {
             toast("Error in posting the job");
             console.error(err);
+          })
+          .finally(() => {
+            setLoading(false);
           });
       }
     },
@@ -195,6 +203,7 @@ const CreateJobForm: React.FC<{
 
             <div className="flex justify-end">
               <button
+                disabled={loading}
                 onClick={() => {
                   if (
                     !values.companyName ||
@@ -206,18 +215,10 @@ const CreateJobForm: React.FC<{
                     isStep1Completed ? submitForm() : setStep1Completed(true);
                   }
                 }}
-                className="bg-[#1597E4] h-10 px-4 py-2 rounded-lg text-white mt-14"
+                className="bg-[#1597E4] h-10 px-4 py-2 rounded-lg text-white mt-14 disabled:bg-gray-200"
               >
                 {isStep1Completed ? "Save" : "Next"}
               </button>
-              {/* {isStep1Completed && (
-                <button
-                  onClick={() => setStep1Completed(false)}
-                  className="bg-[#1597E4] h-10 px-4 py-2 rounded-lg text-white mt-24"
-                >
-                  {isStep1Completed && "Back"}
-                </button>
-              )} */}
             </div>
           </>
         )}
